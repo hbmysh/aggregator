@@ -50,5 +50,8 @@ jobs:
       - name: Process
         run: python -u subscribe/process.py --overwrite
 
+      - name: Trim pool to fastest 8
+        run: python -u trim_pool.py
+
       - name: Timestamp
         run: date
