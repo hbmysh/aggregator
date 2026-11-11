@@ -12,8 +12,10 @@ What it does:
   3. Starts the repo's mihomo binary with that config and measures the
      delay of every proxy through mihomo's external-controller API
      (same method the aggregator's own liveness check uses).
-  4. Keeps the user's own 2 nodes (server 129.225.207.26) always, plus
-     the 6 fastest free nodes by measured delay. Total = 8.
+  4. Keeps the 8 fastest FREE nodes by measured delay. The user's own
+     2 nodes (server 129.225.207.26) are EXCLUDED from the pool by his
+     request (2026-11-11) — they stay in his phone separately and never
+     enter this subscription.
   5. Rewrites proxies / proxy-groups (rules untouched) and PATCHes the
      Clash Gist. Also trims the v2ray file to its 8 fastest vmess nodes.
   6. Prints the kept list with delays; exits non-zero on fatal errors
@@ -48,7 +50,7 @@ import yaml
 REPO_ROOT = os.path.abspath(os.path.dirname(__file__))
 CONFIG_JSON = os.path.join(REPO_ROOT, "my-config.json")
 OWN_SERVER = "129.225.207.26"
-KEEP_FREE = 6
+KEEP_NODES = 8  # fastest free nodes only; own nodes are excluded
 KEEP_V2RAY = 8
 API_BASE = "http://127.0.0.1:9090"
 TEST_URL = "https://www.google.com/generate_204"
@@ -106,7 +108,7 @@ def fetch_full_config(gist_id, filename):
         cfg = yaml.safe_load(raw.decode("utf-8"))
         proxies = (cfg or {}).get("proxies", []) or []
         log(f"fetched {filename}: {len(proxies)} proxies (attempt {attempt + 1})")
-        if len(proxies) > KEEP_FREE + 2 or attempt == 6:
+        if len(proxies) > KEEP_NODES or attempt == 6:
             return cfg
         time.sleep(10)
     return cfg
@@ -174,7 +176,7 @@ def trim_config(cfg, kept_names):
     group_names = {g.get("name") for g in cfg.get("proxy-groups", [])}
     keep_entry = kept | group_names | {"DIRECT", "REJECT", "PASS"}
     by_name = {p.get("name"): p for p in cfg.get("proxies", []) if p.get("name")}
-    # Order follows kept_names: own nodes first, then free by delay.
+    # Order follows kept_names: fastest free first.
     cfg["proxies"] = [by_name[n] for n in kept_names if n in by_name]
     for group in cfg.get("proxy-groups", []):
         group["proxies"] = [p for p in group.get("proxies", []) if p in keep_entry]
@@ -205,7 +207,10 @@ def main():
 
     own = [p for p in proxies if p.get("server") == OWN_SERVER]
     own_names = [p["name"] for p in own if p.get("name")]
-    log(f"own nodes: {own_names}")
+    if own_names:
+        log(f"own nodes present but EXCLUDED from pool: {own_names}")
+    else:
+        log("no own nodes in fetched config (as expected)")
 
     # Write a copy of the config for mihomo to load (measurement only).
     # The trimming below uses the original, unmodified config.
@@ -251,11 +256,9 @@ def main():
             f"(need >= {MIN_FREE_MEASURED}); refusing to trim, Gist untouched"
         )
         return 1
-    top_free = free_sorted[:KEEP_FREE]
-    kept_names = own_names + [p["name"] for p in top_free]
-    log("kept nodes (own first, then fastest free):")
-    for n in own_names:
-        log(f"  own: {n} delay={delays.get(n)}")
+    top_free = free_sorted[:KEEP_NODES]
+    kept_names = [p["name"] for p in top_free]
+    log("kept nodes (fastest free only, own nodes excluded):")
     for p in top_free:
         log(f"  free: {p['name']} delay={delays[p['name']]}ms")
 
