@@ -1,1 +1,113 @@
-{"crawl":{"enable":false},"groups":{"pool":{"emoji":true,"list_only":false,"regularize":{"digits":2,"enable":false,"locate":true,"residential":true},"targets":{"clash":"pool-clash","v2ray":"pool-v2ray"}}},"sites":[{"check_alive":true,"enable":true,"exclude":"","ignore_default_exclude":true,"include":"","name":"my-nodes","push_to":["pool"],"rename":"我的-{name}","subscribe":["https://gist.githubusercontent.com/hbmysh/9ecaadff28a0839ba14746950a690e49/raw/sub.txt"]},{"check_alive":true,"enable":true,"exclude":"过期|失效|测试","ignore_default_exclude":true,"include":"","name":"freenode","push_to":["pool"],"rename":"","subscribe":["https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash"]},{"check_alive":true,"enable":true,"exclude":"过期|失效|测试","ignore_default_exclude":true,"include":"","name":"get-subscribe","push_to":["pool"],"rename":"","subscribe":["https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml"]},{"check_alive":true,"enable":true,"exclude":"过期|失效|测试","ignore_default_exclude":true,"include":"","name":"nomorewalls","push_to":["pool"],"rename":"","subscribe":["https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml"]},{"check_alive":true,"enable":true,"exclude":"过期|失效|测试","ignore_default_exclude":true,"include":"","name":"automerge","push_to":["pool"],"rename":"","subscribe":["https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml"]},{"check_alive":true,"enable":true,"exclude":"过期|失效|测试","ignore_default_exclude":true,"include":"","name":"anaer-sub","push_to":["pool"],"rename":"","subscribe":["https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml"]}],"storage":{"engine":"gist","items":{"pool-clash":{"filename":"pool-clash.yaml","gist_id":"974077595ebb60cc41d4547e5600d72f","username":"hbmysh"},"pool-v2ray":{"filename":"pool-v2ray.txt","gist_id":"b3346846b085840625a535ea01709b0c","username":"hbmysh"}}}}
+{
+  "crawl": {
+    "enable": false
+  },
+  "groups": {
+    "pool": {
+      "emoji": true,
+      "list_only": false,
+      "regularize": {
+        "digits": 2,
+        "enable": false,
+        "locate": true,
+        "residential": true
+      },
+      "targets": {
+        "clash": "pool-clash",
+        "v2ray": "pool-v2ray"
+      }
+    }
+  },
+  "sites": [
+    {
+      "check_alive": true,
+      "enable": true,
+      "exclude": "过期|失效|测试",
+      "ignore_default_exclude": true,
+      "include": "",
+      "name": "freenode",
+      "push_to": [
+        "pool"
+      ],
+      "rename": "",
+      "subscribe": [
+        "https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash"
+      ]
+    },
+    {
+      "check_alive": true,
+      "enable": true,
+      "exclude": "过期|失效|测试",
+      "ignore_default_exclude": true,
+      "include": "",
+      "name": "get-subscribe",
+      "push_to": [
+        "pool"
+      ],
+      "rename": "",
+      "subscribe": [
+        "https://raw.githubusercontent.com/ermaozi/get_subscribe/main/subscribe/clash.yml"
+      ]
+    },
+    {
+      "check_alive": true,
+      "enable": true,
+      "exclude": "过期|失效|测试",
+      "ignore_default_exclude": true,
+      "include": "",
+      "name": "nomorewalls",
+      "push_to": [
+        "pool"
+      ],
+      "rename": "",
+      "subscribe": [
+        "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml"
+      ]
+    },
+    {
+      "check_alive": true,
+      "enable": true,
+      "exclude": "过期|失效|测试",
+      "ignore_default_exclude": true,
+      "include": "",
+      "name": "automerge",
+      "push_to": [
+        "pool"
+      ],
+      "rename": "",
+      "subscribe": [
+        "https://raw.githubusercontent.com/chengaopan/AutoMergePublicNodes/master/list.yml"
+      ]
+    },
+    {
+      "check_alive": true,
+      "enable": true,
+      "exclude": "过期|失效|测试",
+      "ignore_default_exclude": true,
+      "include": "",
+      "name": "anaer-sub",
+      "push_to": [
+        "pool"
+      ],
+      "rename": "",
+      "subscribe": [
+        "https://raw.githubusercontent.com/anaer/Sub/main/clash.yaml"
+      ]
+    }
+  ],
+  "storage": {
+    "engine": "gist",
+    "items": {
+      "pool-clash": {
+        "filename": "pool-clash.yaml",
+        "gist_id": "974077595ebb60cc41d4547e5600d72f",
+        "username": "hbmysh"
+      },
+      "pool-v2ray": {
+        "filename": "pool-v2ray.txt",
+        "gist_id": "b3346846b085840625a535ea01709b0c",
+        "username": "hbmysh"
+      }
+    }
+  }
+}
